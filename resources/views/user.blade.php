@@ -7,12 +7,12 @@ Master User
 @section('content')
     <div class="container-fluid">
             <div class="card-header">
-                <a class="btn btn-primary btn-sm" onClick="add()" href="javascript:void(0)"> Create User</a>
+                <a class="btn btn-primary" onClick="add()" href="javascript:void(0)"> Create User</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
                 <table id="tableUser" class="table table-bordered table-hover">
-                    <thead class="text-white " style="background-color: #f2f2f2; vertical-align: middle;">
+                    <thead class="text-white " style="vertical-align: middle;">
                         <tr style="color: #444444">
                             <th style="width: 10%;">No</th>
                             <th>Nama</th>
@@ -59,7 +59,7 @@ Master User
 
                         <div class="form-group">
                             <label for="name" class="col-sm-3 control-label">Role</label>
-                            <select name="id_employee" id="id_employee" class="form-control">
+                            <select name="role" id="role" class="form-control">
                                 <option value="" selected disabled>Select Role</option>
                                 <option value="0"> User </option>
                                 <option value="1"> Admin </option>
@@ -67,7 +67,8 @@ Master User
                         </div>
 
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary" id="btn-save" value="create">Save </button>
+                            <a class="btn btn-success" onClick="save()" href="javascript:void(0)"> Save </a>
+                            <!-- <button type="submit" class="btn btn-primary" id="btn-save" value="create">Save </button> -->
                         </div>
                     </form>
                 </div>
@@ -79,6 +80,8 @@ Master User
     </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="{{asset('')}}assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({
                 headers: {
@@ -94,22 +97,115 @@ Master User
                 $('#id').val('');
                 $('#id_user').val('');
             }
+        
+        $(function() {
+           $('#tableUser').DataTable({
+                "lengthChange": true
+                , "autoWidth": true
+                , "scrollX": true
+                , processing: true
+                , serverSide: true
+                , ajax: 'user',
+                 "columnDefs": [{
+                        "targets": [0, 3], // your case first column
+                        "className": "text-center"
+                        , "width": "5%"
+                    }
+                    , {
+                        "className": "dt-center"
+                        , "targets": "_all"
+                    }
 
-        $('#UserForm').submit(function(e) {
-            e.preventDefault();
-            $(this).html('Sending..');
-            console.log("addd");
-                let nama = $("input[name=nama]").val();
-                let email = $("input[name=email]").val();
-                let password = $("input[name=password]").val();
-                let role = $("select[name=role]").val();
+                ]
+                , ajax: 'user'
+                , columns: [{
+                        data: 'DT_RowIndex'
+                        , name: 'DT_RowIndex'
+                        , orderable: false
+                        , searchable: false
+                    }
+                    , {
+                        data: 'nama'
+                    }
+                    , {
+                        data: 'email'
+                    }, 
+                    {
+                        data: 'password'
+                    },
+                    {
+                        data: 'role',
+                        render: function(data, type, full, meta) {
+                            if (data == 0) {
+                                return "User"
+                            } else {
+                                return "Admin"
+                            }
+                        }
+                    },
+                    {
+                      data: 'action',
+                      name: 'action'
+                    }
+                ],
+                success: function(settings, json) {
+                            var oTable = $('#tableUser').dataTable();
+                            oTable.fnDraw(false);
+                        }
+            });
+        });
 
-                var sendUser = {
+        function save(){
+            let nama = $("input[name=nama]").val();
+            let email = $("input[name=email]").val();
+            let password = $("input[name=password]").val();
+            let role = $("select[name=role]").val();
+
+            var sendUser = {
                     'nama': nama, 
                     'email': email,
                     'password': password,
                     'role': role
                 };
-                
+
+            
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('store-user')}}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: sendUser,
+                dataType: 'json',
+                success: (data) => {
+                    $("#user-modal").modal('hide');
+                    var oTable = $('#tableUser').dataTable();
+                    oTable.fnDraw(false);
+                }
+                , error: function(data) {
+                    console.log('Error POST');
+                }
             });
+        }
+
+        function editFunc(id) {
+            var id = id;
+            
+            $.ajax({
+                type: "POST"
+                , url: "{{ url('edit-user') }}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    id_user: id
+                }
+                , dataType: 'json'
+                , success: function(res) {
+                    $('#UserModal').html("Edit User");
+                    $('#user-modal').modal('show');
+                    $('#id_user').val(res.id_department);
+                    $('#nama').val(res.nama);
+                    $('#email').val(res.email);
+                    $('#password').val(res.password);
+                    $("#role option[value="+res.role+"]").prop("selected", "selected");
+                }
+            });
+        }
 </script>
