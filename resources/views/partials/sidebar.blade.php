@@ -1,19 +1,4 @@
 <div class="sidebar">
-    <!-- Sidebar user (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="{{asset('/template/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
-      </div>
-      <div class="info">
-        @auth
-          <a href="#" class="d-block">{{Auth::user()->name}}</a>
-        @endauth
-        @guest
-          Belum Login  
-        @endguest
-      </div>
-    </div>
-
     <!-- SidebarSearch Form -->
     <!--<div class="form-inline">
       <div class="input-group" data-widget="sidebar-search">
@@ -97,27 +82,6 @@
             </li>
           </ul>
         </li>
-        @auth
-        <li class="nav-item">
-          <a href="{{ route('logout') }}" class="nav-link bg-danger"  onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();">
-            <p>Logout</p>
-          </a>
-        </li>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-          @csrf
-        </form>
-        @endauth
-
-        @guest
-        <li class="nav-item">
-          <a href="/login" class="nav-link bg-info">
-            <p>
-              Login
-            </p>
-          </a>
-        </li>
-        @endguest
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\CategoryController;
@@ -17,12 +18,16 @@ use App\Http\Controllers\DonasiBukuController;
 |
 */
 
-Route::get('/', [DashboardController::class, 'utama']);
+//get method 
+
+Route::get('/', [LoginController::class, 'index']);
+Route::get('/test', [DashboardController::class, 'utama']);
 Route::get('/signup', [BiodataController::class, 'daftar']);
 
 Route::get('/donasi-buku', function(){
     return view('page.donasi-buku');
 });
+
 Route::get('/cari-buku', function(){
     return view('page.cari-buku');
 });
