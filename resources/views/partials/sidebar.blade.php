@@ -85,20 +85,12 @@
 
         <!-- master data -->
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ route('user') }}" class="nav-link">
+            <i class="nav-icon fa fa-users"></i>
             <p>
-              Master Data
-              <i class="right fas fa-angle-left"></i>
+              Add Users
             </p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ route('user') }}" class="nav-link">
-                <i class="nav-icon fa fa-users"></i>
-                <p>User</p>
-              </a>
-            </li>
-          </ul>
         </li>
       </ul>
     </nav>

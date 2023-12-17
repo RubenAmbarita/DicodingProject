@@ -22,7 +22,7 @@ use App\Http\Controllers\UserController;
 //get method 
 
 Route::get('/', [LoginController::class, 'index']);
-Route::get('/test', [DashboardController::class, 'utama']);
+Route::get('/dashboard', [DashboardController::class, 'utama']);
 Route::get('/signup', [BiodataController::class, 'daftar']);
 Route::get('user', ['as' => 'user', 'uses' => 'App\Http\Controllers\UserController@index']);
 
