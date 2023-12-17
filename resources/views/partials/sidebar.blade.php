@@ -82,6 +82,24 @@
             </li>
           </ul>
         </li>
+
+        <!-- master data -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <p>
+              Master Data
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('user') }}" class="nav-link">
+                <i class="nav-icon fa fa-users"></i>
+                <p>User</p>
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
