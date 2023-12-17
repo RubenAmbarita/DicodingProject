@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DonasiBukuController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ use App\Http\Controllers\DonasiBukuController;
 Route::get('/', [LoginController::class, 'index']);
 Route::get('/test', [DashboardController::class, 'utama']);
 Route::get('/signup', [BiodataController::class, 'daftar']);
+Route::get('user', ['as' => 'user', 'uses' => 'App\Http\Controllers\UserController@index']);
 
 Route::get('/donasi-buku', function(){
     return view('page.donasi-buku');

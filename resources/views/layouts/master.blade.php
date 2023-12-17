@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('judul')</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -52,24 +53,8 @@
 
       <!-- Default box -->
       <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">@yield('judul')</h3>
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
         <div class="card-body">
           @yield('content')
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
         </div>
         <!-- /.card-footer-->
       </div>
@@ -95,6 +80,10 @@
 </div>
 <!-- ./wrapper -->
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <!-- jQuery -->
 <script src="{{asset('/template/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
