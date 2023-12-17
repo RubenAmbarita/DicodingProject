@@ -35,8 +35,8 @@ Route::get('/cari-buku', function(){
 });
 
 Route::post('/home', [BiodataController::class, 'home']);
-
-
+Route::post('store-user', [UserController::class, 'store']);
+Route::post('edit-user', [UserController::class, 'update']);
 Route::group(['middleware'=>['auth']], function(){
     //CRUD Kategori Buku
     //Buat Data Kategori
