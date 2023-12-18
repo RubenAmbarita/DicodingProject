@@ -78,6 +78,59 @@ Master User
             </div>
         </div>
     </div>
+
+    <!-- modal edit -->
+    <div class="modal fade" id="user-edit-modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="UserEditModal"></h4>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0)" id="UserEditForm" name="UserEditForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="id_user_edit" name="id_user_edit">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">Nama</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="nama-edit" name="nama-edit" placeholder="Input Nama User" maxlength="50" required="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="email-edit" name="email-edit" placeholder="Input Email User" maxlength="50" required="">
+                            </div>
+                        </div>  
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="password-edit" name="password-edit" placeholder="Input Password User" maxlength="50" required="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">Role</label>
+                            <select name="role-edit" id="role-edit" class="form-control">
+                                <option value="" selected disabled>Select Role</option>
+                                <option value="0"> User </option>
+                                <option value="1"> Admin </option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <a class="btn btn-success" onClick="saveEdit()" href="javascript:void(0)"> Update </a>
+                            <!-- <button type="submit" class="btn btn-primary" id="btn-save" value="create">Save </button> -->
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="{{asset('')}}assets/plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -186,6 +239,38 @@ Master User
             });
         }
 
+        function saveEdit(){
+            let nama = $("input[name=nama-edit]").val();
+            let email = $("input[name=email-edit]").val();
+            let password = $("input[name=password-edit]").val();
+            let role = $("select[name=role-edit]").val();
+            let id_user_edit = $("input[name=id_user_edit]").val();
+
+            var sendUser = {
+                    'id_user_edit': id_user_edit,
+                    'nama': nama, 
+                    'email': email,
+                    'password': password,
+                    'role': role
+                };
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('update-user')}}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: sendUser,
+                dataType: 'json',
+                success: (data) => {
+                    $("#user-edit-modal").modal('hide');
+                    var oTable = $('#tableUser').dataTable();
+                    oTable.fnDraw(false);
+                }
+                , error: function(data) {
+                    console.log('Error POST');
+                }
+            });
+        }
+
         function editFunc(id) {
             var id = id;
             
@@ -198,14 +283,33 @@ Master User
                 }
                 , dataType: 'json'
                 , success: function(res) {
-                    $('#UserModal').html("Edit User");
-                    $('#user-modal').modal('show');
-                    $('#id_user').val(res.id_department);
-                    $('#nama').val(res.nama);
-                    $('#email').val(res.email);
-                    $('#password').val(res.password);
-                    $("#role option[value="+res.role+"]").prop("selected", "selected");
+                    $('#UserEditModal').html("Edit User");
+                    $('#user-edit-modal').modal('show');
+                    $('#id_user_edit').val(res.id);
+                    $('#nama-edit').val(res.nama);
+                    $('#email-edit').val(res.email);
+                    $('#password-edit').val(res.password);
+                    $("#role-edit option[value="+res.role+"]").prop("selected", "selected");
                 }
             });
+        }
+
+        function deleteFunc(id) {
+            if (confirm("Delete Record?") == true) {
+                var id = id;
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('delete-user') }}",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        id_user: id
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                        var oTable = $('#tableUser').dataTable();
+                        oTable.fnDraw(false);
+                    }
+                });
+            }
         }
 </script>

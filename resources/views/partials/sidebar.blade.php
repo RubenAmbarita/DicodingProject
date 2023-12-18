@@ -25,16 +25,25 @@
           </a>
         </li>
 
-        @auth
         <li class="nav-item">
-          <a href="/category" class="nav-link">
-            <i class="nav-icon fas fa-list"></i>
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-book"></i>
             <p>
-              Kategori
+              Donasi Buku
             </p>
           </a>
         </li>
+
         <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-check-square"></i>
+            <p>
+              Approve Buku
+            </p>
+          </a>
+        </li>
+
+        <!-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
             <p>
@@ -56,10 +65,9 @@
               </a>
             </li>
           </ul>
-        </li>
-        @endauth
+        </li> -->
         
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
@@ -81,7 +89,7 @@
               </a>
             </li>
           </ul>
-        </li>
+        </li> -->
 
         <!-- master data -->
         <li class="nav-item">
