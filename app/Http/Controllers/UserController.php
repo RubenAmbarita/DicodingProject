@@ -34,7 +34,7 @@ class UserController extends Controller
                                                     </a>
                                                 </div>
                                                 <div class="col">
-                                                    <a href="javascript:void(0);" id="delete-category" onClick="#" data-toggle="tooltip" data-original-title="Delete" class="delete btn px-0">
+                                                    <a href="javascript:void(0);" id="delete-category" onClick="deleteFunc('.$item->id.')" data-toggle="tooltip" data-original-title="Delete" class="delete btn px-0">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
                                                 </div>
@@ -72,6 +72,25 @@ class UserController extends Controller
         return Response()->json(['success' => true]);
     }
 
+    public function updateUser(Request $request){
+        $id_user_edit = $request->id_user_edit;
+        $nama = $request->nama;
+        $email = $request->email;
+        $password = $request->password;
+        $role = $request->role;
+              
+            $updateUser = DB::table('user_new')
+                ->where('id', $id_user_edit)
+                ->update(['nama' => $nama,
+                            'email' => $email,
+                            'password' => $password,
+                            'role' => $role,
+                            'updated_at' => now()
+                    ]);
+                        
+        return Response()->json(['success' => true]);
+    }
+
     public function update(Request $request)
     {
         $variable = DB::table('user_new')
@@ -86,5 +105,11 @@ class UserController extends Controller
             ]);
 
         return Response()->json($variable);
+    }
+    
+    public function destroy(Request $request)
+    {
+        $deleted = DB::table('user_new')->where('id', $request->id_user)->delete();
+        return Response()->json($deleted);
     }
 }
