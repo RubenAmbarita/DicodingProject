@@ -37,13 +37,11 @@
                         <form action="#" method="post">
                             {{ csrf_field() }}
                             <div class="form-group first">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="email">
 
                             </div>
                             <div class="form-group last mb-3" style="display:flex;flex-direction:row;">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="passwordLogin" name="passwordLogin">
+                                <input type="password" class="form-control" id="passwordLogin" name="passwordLogin" placeholder="password">
                                 <button type="button" style="float: right;background-color:transparent; border:none;" onclick="openPassword()"> <span class="btn-show-pass">
                                         <i class="fa fa-eye" id='iconMata'></i>
                                     </span></button>
