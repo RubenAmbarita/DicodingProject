@@ -7,7 +7,8 @@ use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DonasiBukuController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ApproveBookController;
+use App\Http\Controllers\AcceptBookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,8 @@ Route::get('/', [LoginController::class, 'index']);
 Route::get('/dashboard', [DashboardController::class, 'utama']);
 Route::get('/signup', [BiodataController::class, 'daftar']);
 Route::get('user', ['as' => 'user', 'uses' => 'App\Http\Controllers\UserController@index']);
+Route::get('approve-book', ['as' => 'approve-book', 'uses' => 'App\Http\Controllers\ApproveBookController@index']);
+Route::get('accept-book', ['as' => 'accept-book', 'uses' => 'App\Http\Controllers\AcceptBookController@index']);
 
 Route::get('/donasi-buku', function(){
     return view('page.donasi-buku');
@@ -39,6 +42,13 @@ Route::post('store-user', [UserController::class, 'store']);
 Route::post('update-user', [UserController::class, 'updateUser']);
 Route::post('edit-user', [UserController::class, 'update']);
 Route::post('delete-user', [UserController::class, 'destroy']);
+//buku
+Route::post('store-book', [ApproveBookController::class, 'store']);
+Route::post('edit-approve', [ApproveBookController::class, 'update']);
+Route::post('edit-accept', [AcceptBookController::class, 'update']);
+Route::post('update-approve', [ApproveBookController::class, 'updateApprove']);
+Route::post('update-accept', [AcceptBookController::class, 'updateAccept']);
+Route::post('delete-approve', [ApproveBookController::class, 'destroy']);
 Route::group(['middleware'=>['auth']], function(){
     //CRUD Kategori Buku
     //Buat Data Kategori

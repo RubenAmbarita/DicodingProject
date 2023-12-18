@@ -13,17 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('donasibuku', function (Blueprint $table) {
+        Schema::create('tb_buku_donasi', function (Blueprint $table) {
             $table->id();
-            $table->string('namaBuku');
-            $table->string('pengarang');
-            $table->integer('jumlahBuku');
-            $table->string('fotoBuku');
-
-            $table->unsignedBigInteger('category_id');
-
-            $table->foreign('category_id')->references('id')->on('categories');
-
+            $table->integer('id_user');
+            $table->string('nama');
+            $table->string('penerbit');
+            $table->string('judul');
+            $table->integer('tahun_terbit');
+            $table->string('alamat_jemput');
+            $table->integer('confirmed');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('donasibuku');
+        Schema::dropIfExists('tb_buku_donasi');
     }
 };
