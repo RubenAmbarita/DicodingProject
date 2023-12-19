@@ -33,10 +33,21 @@ Route::get('/donasi-buku', function(){
     return view('page.donasi-buku');
 });
 
+Route::get('/dashboard', function () {
+    return redirect('/accept-book');
+})->name('accept-book');
+
+// Route::get('/', function () {
+//         return Redirect::to('/accept-book');
+//     })->name('accept-book');
+
 Route::get('/cari-buku', function(){
     return view('page.cari-buku');
 });
 
+// login
+Route::post('loginUser', [LoginController::class, 'loginUser'])->name('loginUser');
+// user
 Route::post('/home', [BiodataController::class, 'home']);
 Route::post('store-user', [UserController::class, 'store']);
 Route::post('update-user', [UserController::class, 'updateUser']);

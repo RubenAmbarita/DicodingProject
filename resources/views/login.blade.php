@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="cache-control" content="nocache, no-store, max-age=0, must-revalidate">
     <meta http-equiv="pragma" content="no-cache">
@@ -34,7 +35,7 @@
                             <h1>Sign In</h1>
                             <p class="mb-4">Welcome To WasteUrBooks</p>
                         </div>
-                        <form action="#" method="post">
+                        <form action="{{route('loginUser')}}" method="post">
                             {{ csrf_field() }}
                             <div class="form-group first">
                                 <input type="email" class="form-control" id="email" name="email" placeholder="email">
@@ -49,6 +50,7 @@
                             <br />
                             <br />
                             <input type="submit" value="Sign In" class="btn btn-block btn-primary">
+                            <!-- <a class="btn btn-success" onClick="loginUser()" href="javascript:void(0)" style="color: #FFFFFF"> Sign In </a> -->
                         </form>
                     </div>
                 </div>
@@ -64,5 +66,36 @@
 <script src="{{asset('')}}assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('')}}assets/dist/js/adminlte.min.js"></script>
+<script type="text/javascript">
+    $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+    function loginUser(){
+            let email = $("input[name=email]").val();
+            let password = $("input[name=passwordLogin]").val();
+
+            var sendLogin = {
+                    'email': email,
+                    'password': password
+                };
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('loginUser')}}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: sendLogin,
+                dataType: 'json',
+                success: (data) => {
+                    
+                }
+                , error: function(data) {
+                    alert('Username/Password Salah.')
+                }
+            });
+        }
+</script>
 </body>
 </html>

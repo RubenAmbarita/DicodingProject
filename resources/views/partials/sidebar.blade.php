@@ -16,7 +16,7 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class 
           with font-awesome or any other icon font library -->
-
+        
         <li class="nav-item">
           <a href="{{ route('approve-book')}}" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
@@ -25,7 +25,8 @@
             </p>
           </a>
         </li>
-
+        
+        @if (\Session::get('role') == 1)
         <li class="nav-item">
           <a href="{{ route('accept-book')}}" class="nav-link">
             <i class="nav-icon fas fa-check-square"></i>
@@ -34,7 +35,7 @@
             </p>
           </a>
         </li>
-
+        @endif
         <!-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book"></i>
@@ -84,6 +85,7 @@
         </li> -->
 
         <!-- master data -->
+        @if (\Session::get('role') == 1)
         <li class="nav-item">
           <a href="{{ route('user') }}" class="nav-link">
             <i class="nav-icon fa fa-users"></i>
@@ -92,6 +94,7 @@
             </p>
           </a>
         </li>
+        @endif
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
