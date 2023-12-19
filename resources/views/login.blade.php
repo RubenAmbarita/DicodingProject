@@ -38,7 +38,7 @@
                         <form action="{{route('loginUser')}}" method="post">
                             {{ csrf_field() }}
                             <div class="form-group first">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="email">
+                                <input class="form-control" id="email" name="email" placeholder="email">
 
                             </div>
                             <div class="form-group last mb-3" style="display:flex;flex-direction:row;">
